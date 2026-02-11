@@ -9,8 +9,8 @@ from flask import Flask, request
 # from flask_cors import CORS, cross_origin
 from flasgger import Swagger, APISpec
 from common.jsonify import jsonify
-from thrusday.settings import DEFAULT_TIMEZONE, SECURITY_NONCE_LIFETIME, SOCKETIO_REDIS_HOST, SOCKETIO_REDIS_CHANNEL, S3_BUCKET, DB_CONFIG, REDIS_PASSWORD, ADMIN_SESSIONS_CONFIG, \
-    ADMIN_SESSION_LIFETIME
+from thrusday.settings import DEFAULT_TIMEZONE, SECURITY_NONCE_LIFETIME, SOCKETIO_REDIS_HOST, SOCKETIO_REDIS_CHANNEL, S3_BUCKET, DB_CONFIG, REDIS_PASSWORD, SESSIONS_CONFIG, \
+    SESSION_LIFETIME
 from api.v1.ext import api_route_config, socketio
 from flask_socketio import SocketIO, rooms, join_room, leave_room
 from werkzeug.routing import BaseConverter, ValidationError
@@ -43,8 +43,8 @@ def create_app(package_name):
     app.config['CORS_HEADERS'] = 'Content-Type'
     app.config['PROPAGATE_EXCEPTIONS'] = False
     app.config['SESSION_COOKIE_NAME'] = f'thursday.{package_name}'
-    app.permanent_session_lifetime = ADMIN_SESSION_LIFETIME
-    app.session_interface = MongoSessionInterface(config=ADMIN_SESSIONS_CONFIG, app=app)
+    app.permanent_session_lifetime = SESSION_LIFETIME
+    app.session_interface = MongoSessionInterface(config=SESSIONS_CONFIG, app=app)
     log.debug('Creating API 234234%s', package_name)
     initialize_socketio(app)
     initialize_swagger(app)

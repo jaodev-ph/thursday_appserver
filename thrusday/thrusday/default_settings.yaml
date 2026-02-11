@@ -31,7 +31,7 @@ db_config:
 
 sessions_config:
     host: mongodb
-    port: 27040
+    port: 27017
     database: thrusday
     collection: sessions
     authentication: on
@@ -78,16 +78,3 @@ s3_region: us-east-1
 s3_bucket: swift
 
 gmap_apikey: AIzaSyCPWpYiyZPZTIoVN791X-zpwPDABRRh5u4
-
-admin_session_lifetime: 604800 # 7 days
-admin_sessions_config:
-    host: mongodb
-    database: thrusday
-    collection: admin_sessions
-    port: 27040
-    authentication: on
-    username: 35d1d55b448d49e18bb51680cef60824
-    password: 36374aa396384fa1b20666c189cfb4a4
-    replicaSet: off
-    max_total_sessions: 28000
-    max_sessions_per_user: 1
