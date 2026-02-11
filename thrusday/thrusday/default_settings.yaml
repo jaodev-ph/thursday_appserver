@@ -1,0 +1,93 @@
+---
+app_title: thrusday
+release: '1.0'
+debug: on
+sentry_dsn: !!null
+sentry_public_dsn: !!null
+secret_key: AnonymousComp
+
+api_enabled: on
+api_allowed_networks:
+    - 0.0.0.0/0
+
+log_format: '[%(asctime)s: %(levelname)s/%(processName)s] | %(name)s: %(message)s'
+secret_token: thrusdaysecretkey
+security_nonce_lifetime: 86400 # 1 day
+
+datetime_format: '%Y-%m-%d %H:%M:%S' # YYYY-MM-DD HH:mm:ss (JS)
+default_timezone: Asia/Manila
+default_daterange: 'Today'  #-- options: ['Today', 'Yesterday', 'Last 3 Days', 'Last 7 Days', 'Last 30 Days', 'This Month', 'Last Month', 'This Year', 'Last Year']
+google_maps_api_key: ''
+
+db_config:
+    thrusday:
+        name: thrusday
+        location:
+            - mongodb
+        authentication: yes
+        username: 35d1d55b448d49e18bb51680cef60824
+        password: 36374aa396384fa1b20666c189cfb4a4
+        replicaset: thrusday
+
+sessions_config:
+    host: mongodb
+    port: 27040
+    database: thrusday
+    collection: sessions
+    authentication: on
+    username: 35d1d55b448d49e18bb51680cef60824
+    password: 36374aa396384fa1b20666c189cfb4a4
+    replicaSet: off
+    max_total_sessions: 28000
+    max_sessions_per_user: 2
+
+redis_password: 4n0nym0usC0mp
+rcelery_host: redis
+rcelery_channel: 9
+
+socketio_redis_host: redis
+socketio_redis_channel: 5
+cache_redis_host: redis
+cache_redis_channel: 7
+
+session_lifetime: 604800 # 7 days
+
+timeseries_engine: redis_hash
+timeseries_redis_host: redis
+timeseries_redis_channel: 1
+timeseries_redis_cluster: no
+# timeseries_engine: cassandra
+# timeseries_engine: redis_hash
+# timeseries_engine: redis_json
+# timeseries_engine: mongodb
+firebase_config:
+    apiKey: "AIzaSyDBn5XyLYSXX0HScsZuKPrxRJBwwljysyg"
+    authDomain: "financemanager-b43f4.firebaseapp.com"
+    projectId: "financemanager-b43f4"
+    storageBucket: "financemanager-b43f4.firebasestorage.app"
+    messagingSenderId: "573379660417"
+    appId: "1:573379660417:web:a774bd7a2043ad8c0e5b80"
+    measurementId: "G-NWEQMVV3KE"
+
+
+s3_access_key_id: NFYOAJWK40VMEKSDHLVD
+s3_secret_access_key: MXJNWRC1FVBXQQS2RENSNKGKWGAMBXS4UR63IAPV
+s3_hostname: http://minio:9000
+s3_render_url: http://localhost:9101
+s3_region: us-east-1
+s3_bucket: swift
+
+gmap_apikey: AIzaSyCPWpYiyZPZTIoVN791X-zpwPDABRRh5u4
+
+admin_session_lifetime: 604800 # 7 days
+admin_sessions_config:
+    host: mongodb
+    database: thrusday
+    collection: admin_sessions
+    port: 27040
+    authentication: on
+    username: 35d1d55b448d49e18bb51680cef60824
+    password: 36374aa396384fa1b20666c189cfb4a4
+    replicaSet: off
+    max_total_sessions: 28000
+    max_sessions_per_user: 1
