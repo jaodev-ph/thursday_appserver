@@ -9,7 +9,7 @@ from flask import Flask, request
 # from flask_cors import CORS, cross_origin
 from flasgger import Swagger, APISpec
 from common.jsonify import jsonify
-from thrusday.settings import DEFAULT_TIMEZONE, SECURITY_NONCE_LIFETIME, SOCKETIO_REDIS_HOST, SOCKETIO_REDIS_CHANNEL, S3_BUCKET, DB_CONFIG, REDIS_PASSWORD, SESSIONS_CONFIG, \
+from thursday.settings import DEFAULT_TIMEZONE, SECURITY_NONCE_LIFETIME, SOCKETIO_REDIS_HOST, SOCKETIO_REDIS_CHANNEL, S3_BUCKET, DB_CONFIG, REDIS_PASSWORD, SESSIONS_CONFIG, \
     SESSION_LIFETIME
 from api.v1.ext import api_route_config, socketio
 from flask_socketio import SocketIO, rooms, join_room, leave_room
@@ -17,7 +17,7 @@ from werkzeug.routing import BaseConverter, ValidationError
 
 from common.time_utils import utcnow
 
-from thrusday.mongodb_session_interface import MongoSessionInterface
+from thursday.mongodb_session_interface import MongoSessionInterface
 
 log = logging.getLogger('api.factory')
 
@@ -134,7 +134,7 @@ def initialize_swagger(app):
         config=swagger_config,
         template = {
             "info": {
-                "title": "Thrusday API",
+                "title": "thursday API",
                 "description": "The API is based on REST (Representational State Transfer) principles, invoked via normal HTTP requests, which enables any web development language to easily use the API.",
                 "contact": {
                     "email": "josephjaojoco@gmail.com",

@@ -1,5 +1,5 @@
 gunicorn==25.0.3
-thrusday==0.0
+thursday==0.0
 flasgger==0.9.4
 apispec==2.0.2
 gevent==25.9.1
@@ -19,4 +19,8 @@ tzlocal==1.5.1
 ujson==1.35
 pillow==8.4.0
 pyfcm==2.0.7
-
+langchain==1.2.10
+langchain-openai==1.1.9
+openai==2.20.0
+ollama==0.6.1
+langchain-ollama==1.0.1

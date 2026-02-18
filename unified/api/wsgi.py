@@ -3,7 +3,7 @@ if sys.version_info < (3,6,5):
     sys.stderr.write('You need python 3.6.5 or later to run this script\n')
     sys.exit(1)
 
-from thrusday.settings import APP_TITLE, DEBUG, LOG_FORMAT, RELEASE
+from thursday.settings import APP_TITLE, DEBUG, LOG_FORMAT, RELEASE
 from platform import platform, python_version
 
 print(f'''
@@ -28,7 +28,7 @@ basicConfig(level=10 if DEBUG else 30, format=LOG_FORMAT)
 log = getLogger(APP_TITLE)
 log.setLevel(10 if DEBUG else 30)
 
-from thrusday.migration import  initialize
+from thursday.migration import  initialize
 log.info('Executing migration scripts..')
 initialize()
 

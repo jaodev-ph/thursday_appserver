@@ -8,9 +8,9 @@ def parse_requirements(filename):
         return f.read().splitlines()
 
 setup(
-    name='thrusday',
+    name='thursday',
     version='0.0',
-    description='thrusday unified library',
+    description='thursday unified library',
     url='',
     author='AnonymousComp',
     author_email='admin@whalebytes.co',

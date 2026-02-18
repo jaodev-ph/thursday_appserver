@@ -1,4 +1,4 @@
-from thrusday.settings import RCELERY_HOST, RCELERY_CHANNEL, REDIS_PASSWORD
+from thursday.settings import RCELERY_HOST, RCELERY_CHANNEL, REDIS_PASSWORD
 from kombu import Queue, Exchange
 
 task_acks_late = True
@@ -6,10 +6,10 @@ task_acks_late = True
 broker_url = f'redis://:{REDIS_PASSWORD}@{RCELERY_HOST}:6379/{RCELERY_CHANNEL}'
 result_backend = f'redis://:{REDIS_PASSWORD}@{RCELERY_HOST}:6379/{RCELERY_CHANNEL}'
 
-beat_schedule_filename = '/tmp/thrusday_celerybeat.db'
+beat_schedule_filename = '/tmp/thursday_celerybeat.db'
 beat_schedule = {
     'scheduled-task-queue': {
-        'task': 'thrusday.worker.add',
+        'task': 'thursday.worker.add',
         'schedule': 3600,  # 'every xx seconds' (NOTE: value should be float type)
         'args': (10, 10),
     },
@@ -23,7 +23,7 @@ task_default_queue = 'default'
 default_exchange = Exchange('default', type='direct')
 
 task_queues = (
-    Queue('default', default_exchange, routing_key='thrusday.default'),
+    Queue('default', default_exchange, routing_key='thursday.default'),
 )
 
 task_routes = {

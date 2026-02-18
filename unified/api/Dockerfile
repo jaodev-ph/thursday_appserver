@@ -1,5 +1,5 @@
 # APP SETUP
-FROM ghcr.io/jaodev-ph/thrusday_appserver/base:latest AS app-setup
+FROM ghcr.io/jaodev-ph/thursday_appserver/base:latest AS app-setup
 
 EXPOSE 5031
 COPY ./requirements.txt /

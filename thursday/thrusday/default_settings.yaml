@@ -1,5 +1,5 @@
 ---
-app_title: thrusday
+app_title: thursday
 release: '1.0'
 debug: on
 sentry_dsn: !!null
@@ -11,7 +11,7 @@ api_allowed_networks:
     - 0.0.0.0/0
 
 log_format: '[%(asctime)s: %(levelname)s/%(processName)s] | %(name)s: %(message)s'
-secret_token: thrusdaysecretkey
+secret_token: thursdaysecretkey
 security_nonce_lifetime: 86400 # 1 day
 
 datetime_format: '%Y-%m-%d %H:%M:%S' # YYYY-MM-DD HH:mm:ss (JS)
@@ -20,19 +20,19 @@ default_daterange: 'Today'  #-- options: ['Today', 'Yesterday', 'Last 3 Days', '
 google_maps_api_key: ''
 
 db_config:
-    thrusday:
-        name: thrusday
+    thursday:
+        name: thursday
         location:
             - mongodb
         authentication: yes
         username: 35d1d55b448d49e18bb51680cef60824
         password: 36374aa396384fa1b20666c189cfb4a4
-        replicaset: thrusday
+        replicaset: thursday
 
 sessions_config:
     host: mongodb
     port: 27017
-    database: thrusday
+    database: thursday
     collection: sessions
     authentication: on
     username: 35d1d55b448d49e18bb51680cef60824
@@ -78,3 +78,8 @@ s3_region: us-east-1
 s3_bucket: swift
 
 gmap_apikey: AIzaSyCPWpYiyZPZTIoVN791X-zpwPDABRRh5u4
+
+#AI
+VECTOR_CONFIG:
+    host: localhost
+    port: 8000

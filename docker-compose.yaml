@@ -1,8 +1,8 @@
 services:
     base:
-        image: ghcr.io/jaodev-ph/thrusday_appserver/base
+        image: ghcr.io/jaodev-ph/thursday_appserver/base
         build:
-            context: thrusday
+            context: thursday
             args:
                 GITHUB_TOKEN: ${GITHUB_TOKEN}
         environment:
@@ -10,7 +10,7 @@ services:
             GIT_HASH: "${GIT_HASH:-latest}"
         dns: 8.8.8.8
     # nginx:
-    #     container_name: thrusday_nginx
+    #     container_name: thursday_nginx
     #     image: nginx:alpine
     #     restart: always
     #     # links:
@@ -47,8 +47,8 @@ services:
     #         VUE_APP_SWIFT_MAP_SECRET_KEY: "SWIFTentRopyTecHnologyAppSecret2025"
         # command: ['ping', 'localhost']
     api:
-        container_name: thrusday_api
-        image: ghcr.io/jaodev-ph/thrusday_appserver/api
+        container_name: thursday_api
+        image: ghcr.io/jaodev-ph/thursday_appserver/api
         build:
             context: unified/api
             target: development
@@ -60,20 +60,22 @@ services:
         depends_on:
             - base
             - mongodb
+            - ollama
         volumes:
             - ./unified/api:/srv/app
-            - ./thrusday:/srv/thrusday
+            - ./thursday:/srv/thursday
         environment:
             PYTHONIOENCODING: 'utf-8'
-            PYTHONPATH: "${PYTHONPATH}:/thrusday/thrusday"
+            PYTHONPATH: "${PYTHONPATH}:/thursday/thursday"
             TZ: "Asia/Manila"
+            OLLAMA_HOST: http://ollama:11434
         # command: ['ping', 'localhost']
     
     mongodb:
-        container_name: thrusday_mongodb
+        container_name: thursday_mongodb
         image: mongo:8.0.0-rc9-jammy
         volumes:
-            - thrusday-mongodb-data:/data/db
+            - thursday-mongodb-data:/data/db
         restart: unless-stopped
         networks:
             - default
@@ -94,6 +96,28 @@ services:
             options:
                 max-size: "256m"
 
+    ollama:
+        image: ollama/ollama:latest
+        container_name: thursday_ollama
+        ports:
+            - "11434:11434"
+        volumes:
+            - thursday-ollama-data:/root/.ollama
+        restart: unless-stopped
+
+    chroma:
+        image: ghcr.io/chroma-core/chroma:latest
+        container_name: thursday_chroma
+        ports:
+            - "8000:8000"
+        volumes:
+            - thursday-chroma-data:/data
+        environment:
+            - CHROMA_DB_IMPL=duckdb+parquet
+            - CHROMA_PERSIST_DIRECTORY=/data
+
 volumes:
-    thrusday-mongodb-data:
+    thursday-mongodb-data:
+    thursday-ollama-data:
+    thursday-chroma-data:
 

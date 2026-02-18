@@ -6,7 +6,7 @@ from werkzeug.exceptions import HTTPException
 from common.jsonify import jsonify as _jsonify
 from flask import request, abort as original_flask_abort, make_response
 from logging import getLogger
-from thrusday.settings import SOCKETIO_REDIS_HOST, SOCKETIO_REDIS_CHANNEL, REDIS_PASSWORD, S3_BUCKET, DEFAULT_TIMEZONE
+from thursday.settings import SOCKETIO_REDIS_HOST, SOCKETIO_REDIS_CHANNEL, REDIS_PASSWORD, S3_BUCKET, DEFAULT_TIMEZONE
 from flask_socketio import SocketIO
 
 
@@ -91,7 +91,8 @@ FILES_PARAMETERS = [
 def add_api_url_rules(app, rules):
     for path, cls, method in rules:
         app.add_url_rule(path, view_func=cls.as_view(cls.getViewName()), methods=[method])
-        app.view_functions[cls.getViewName()] = cross_origin(**api_route_config)(app.view_functions[cls.getViewName()])
+        app.view_functions[cls.getViewName()] = (app.view_functions[cls.getViewName()])
+        #cross_origin(**api_route_config)(app.view_functions[cls.getViewName()])
 
 
 def validateOID(value):

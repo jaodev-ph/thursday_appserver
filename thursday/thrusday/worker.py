@@ -1,6 +1,6 @@
 import logging
 
-from thrusday.settings import APP_TITLE
+from thursday.settings import APP_TITLE
 from celery import Celery
 
 log = logging.getLogger('%s.worker' % (APP_TITLE))
@@ -9,10 +9,10 @@ log.setLevel(logging.DEBUG)
 retry_delay = 10
 max_retries = 3
 
-celery = Celery('thrusday_celery')
+celery = Celery('thursday_celery')
 celery.conf.task_max_retries = 3
 try:
-    celery.config_from_object('thrusday.celery_config')
+    celery.config_from_object('thursday.celery_config')
 except:
     import celeryconfig
     celery.config_from_object(celeryconfig)

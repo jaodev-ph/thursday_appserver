@@ -7,7 +7,7 @@ from datetime import datetime
 from bson.objectid import ObjectId
 
 from functools import wraps
-from thrusday.settings import SECRET_TOKEN, SECURITY_NONCE_LIFETIME
+from thursday.settings import SECRET_TOKEN, SECURITY_NONCE_LIFETIME
 from flask import request, make_response, current_app as app
 from common.jsonify import jsonify
 

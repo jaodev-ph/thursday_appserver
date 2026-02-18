@@ -8,11 +8,11 @@ from logging import getLogger
 from datetime import datetime
 import pytz
 from common.jsonify import jsonify
-from thrusday.settings import DATETIME_FORMAT, DEFAULT_TIMEZONE
+from thursday.settings import DATETIME_FORMAT, DEFAULT_TIMEZONE
 from flask import request, abort as original_flask_abort, make_response
 
 
-log = getLogger('thrusday.helpers')
+log = getLogger('thursday.helpers')
 
 gsettings = {
     'DATETIME_FORMAT': DATETIME_FORMAT,

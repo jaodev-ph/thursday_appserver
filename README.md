@@ -1,2 +1,2 @@
-# thrusday_appserver
+# thursday_appserver
 Saas AI for businesss

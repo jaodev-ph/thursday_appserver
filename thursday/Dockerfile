@@ -37,8 +37,8 @@ RUN pip3 install -r requirements.txt --retries 30 --default-timeout=60
 RUN pip3 install git+https://jaodev-ph:${GITHUB_TOKEN}@github.com/jaodev-ph/python-library
 
 
-COPY . /srv/thrusday
-WORKDIR /srv/thrusday
+COPY . /srv/thursday
+WORKDIR /srv/thursday
 RUN python3 setup.py install
 CMD ''
 

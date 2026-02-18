@@ -1,6 +1,6 @@
 APP_TITLE = __name__
 
-from thrusday.settings import DEBUG, LOG_FORMAT
+from thursday.settings import DEBUG, LOG_FORMAT
 from common.decorators import route, validate_form, cast_form
 from common.fixed_datetime import datetime as fdatetime, timezone
 from common.jsonify import jsonify

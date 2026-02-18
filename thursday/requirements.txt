@@ -31,3 +31,5 @@ tzlocal==1.5.1
 ujson==1.35
 itsdangerous==2.0
 requests==2.27.1
+
+chroma==0.2.0
