@@ -10,7 +10,7 @@ from api.v1.ext import ExtSchema, DefaultResponsesWith, PostResultSchema, PostSu
     SOCKETIO_REDIS_HOST, SOCKETIO_REDIS_CHANNEL, REDIS_PASSWORD, parseValidationError, FILES_PARAMETERS
 
 from thursday.settings import APP_TITLE
-from thursday.vector_service import VectorService
+from thursday.vector_service import VectorService, vector_client
 
 import ollama
 
@@ -65,3 +65,39 @@ class EmbeddingPostView(ExtSwaggerView):
                 metadatas=[metadatas[i]]
             )
         return jsonify({'response': args}), 200
+
+
+
+
+
+class EmbeddingDeleteView(ExtSwaggerView):
+    tags = TAGS
+    parameters = [{
+        'in': 'path',
+        'name': 'collection_name',
+        'type': 'string',
+    }]
+    responses = DefaultResponsesWith({
+        '200': {
+            "description": "Data Embeddings" ,
+            "schema": PostSuccessSchema
+        },
+        '404': {
+            'description': 'Generic Error Message / Value Error Message',
+            'schema': PostErrorSchema
+        }
+    })
+    validation = False
+    security = [{
+        'ApiKeyAuth': [],
+        'JWT': []
+    }]
+    def delete(self, collection_name):
+        """ 
+        Embedding Post View
+        """
+        log.info('list: %s', vector_client.list_collections())
+        log.info('collection_name: %s', collection_name)
+        result = vector_client.delete_collection(collection_name)
+        log.info('result: %s', result)
+        return jsonify({'message': "Successful Deleted"}), 200

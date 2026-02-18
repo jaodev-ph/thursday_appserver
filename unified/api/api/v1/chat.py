@@ -11,11 +11,29 @@ from api.v1.ext import ExtSchema, DefaultResponsesWith, PostResultSchema, PostSu
 
 from thursday.settings import APP_TITLE
 
+from thursday.vector_service import VectorService
 
 import ollama
 
 TAGS = ['Chat']
 log = getLogger(f"{APP_TITLE}.api.v1.chat")
+
+def detect_intent(query):
+    prompt = f"""
+    Classify the following user query into one of these intents:
+    - services
+    - products
+    Only return the intent name.
+
+    Query: {query}
+    """
+    response = ollama.chat(
+        model="llama3.2",
+        messages=[{"role": "user", "content": prompt}]
+    )
+    log.info('detect_intent: %s', response)
+    return response["message"]["content"].strip().lower()
+
 
 class ChatPostViewSchema(ExtSchema):
     question = fields.Str(required=True)
@@ -53,12 +71,54 @@ class ChatPostView(ExtSwaggerView):
         args = ChatPostViewSchema.postmap(request.json)
         log.info('args: %s', args)
         question = args.get('question')
+        result = rag_chat(question)
+        log.info('result: %s', result)
+        # messages = [{"role": "user", "content": question}]
 
-        messages = [{"role": "user", "content": question}]
-
-        response_text = ""
-        for part in ollama.chat("llama3.2", messages=messages, stream=True):
-            response_text += part["message"]["content"]
+        # response_text = ""
+        # for part in ollama.chat("llama3.2", messages=messages, stream=True):
+        #     response_text += part["message"]["content"]
 
 
-        return jsonify({'response': response_text}), 200
+        return jsonify({'response': result}), 200
+
+
+
+def rag_chat(query):
+    intent = detect_intent(query)
+    log.info('intent: %s', intent)
+    vs = VectorService("rsp_dental_clinic")
+    response = ollama.embed(model="mxbai-embed-large", input=[query])
+    results = vs.collection.query(
+        query_embeddings=response.embeddings,
+        n_results=5,
+        where={"category": intent}
+    )
+    log.info('cs_count: %s', vs.collection.count())
+    data = vs.collection.get()
+    log.info('data: %s', data)
+
+    log.info('results: %s', results)
+    docs = results["documents"][0]
+
+    context = "\n".join([f"- {d}" for d in docs])
+
+    prompt = f"""
+        User question: {query}
+
+        Use ONLY this info:
+        {context}
+
+        Answer clearly and short.
+        """
+
+    answer = ollama.chat(
+        model="llama3.2",
+        messages=[{"role": "user", "content": prompt}]
+    )
+
+    return {
+        "intent": intent,
+        "answer": answer["message"]["content"],
+        "sources": docs
+    }

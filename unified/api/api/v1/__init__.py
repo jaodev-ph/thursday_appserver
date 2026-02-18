@@ -19,9 +19,10 @@ add_api_url_rules(app, [
    ('/chat', ChatPostView, 'POST')
 ])
 
-from api.v1.embedding import EmbeddingPostView
+from api.v1.embedding import EmbeddingPostView, EmbeddingDeleteView
 
 add_api_url_rules(app, [
-   ('/embeddings', EmbeddingPostView, 'POST')
+   ('/embeddings', EmbeddingPostView, 'POST'),
+   ('/embeddings/<string:collection_name>', EmbeddingDeleteView, 'DELETE')
 ])
 
