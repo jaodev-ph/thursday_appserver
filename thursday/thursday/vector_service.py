@@ -1,20 +1,51 @@
 import chromadb
+from chromadb.utils import embedding_functions
 from logging import getLogger
 
 from thursday.settings import VECTOR_CONFIG
 
 log = getLogger('thursday.vectors')
+from ollama import Ollama
 
+ollama_client = Ollama()
 vector_client = chromadb.HttpClient(host=VECTOR_CONFIG.get('host'), port=VECTOR_CONFIG.get('port'))
+log.info('vectorDB connecting: %s', vector_client)
 
-log.info('vector_client connecting: %s', vector_client)
 
+def get_ollama_embeddings(texts: list[str], model: str = "mxbai-embed-large"):
+    """
+    Calls Ollama Python client to get embeddings for a batch of texts.
+    Returns a list of lists of floats.
+    """
+    # Ollama Python embed API expects a list of strings
+    result = ollama_client.embed(model=model, input=texts)
+    return result.embeddings  # list[list[float]]
+
+class OllamaEmbedding(embedding_functions.EmbeddingFunction):
+    def __init__(self, model_name="mxbai-embed-large"):
+        self.model_name = model_name
+
+    def __call__(self, texts: list[str]):
+        return get_ollama_embeddings(texts, model=self.model_name)
+
+
+ollama_embed_fn = OllamaEmbedding(model_name="mxbai-embed-large")
 
 class VectorService:
     def __init__(self, collection_name="default_collection"):
         """Initialize service with a specific collection."""
         self.collection_name = collection_name
-        self.collection = vector_client.get_or_create_collection(collection_name)
+        existing = [c.name for c in vector_client.list_collections()]
+        
+        if collection_name in existing:
+            # don’t pass embedding_function again
+            self.collection = vector_client.get_or_create_collection(collection_name)
+
+        else:
+            self.collection = vector_client.get_or_create_collection(
+                collection_name,
+                embedding_function=ollama_embed_fn,
+            )
 
     # ------------------------------
     # CRUD Methods

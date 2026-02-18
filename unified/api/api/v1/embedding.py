@@ -18,9 +18,10 @@ TAGS = ['Chat']
 log = getLogger(f"{APP_TITLE}.api.v1.embeddings")
 
 class EmmbeddingPostViewSchema(ExtSchema):
-    ids = fields.List(fields.String(), required=True, default=[])
+    collection_name = fields.String(required=True)
+    id_prefix = fields.String(required=True)
     documents = fields.List(fields.String(), required=True, default=[])
-    metadatas = fields.List(fields.String(), required=True, default=[])
+    metadatas = fields.List(fields.Dict(), required=True, default=[])
 
 class EmbeddingPostView(ExtSwaggerView):
     tags = TAGS
@@ -49,7 +50,18 @@ class EmbeddingPostView(ExtSwaggerView):
         """ 
         Embedding Post View
         """
-        pass
-
-
-        return jsonify({'response': ""}), 200
+        form = request.json
+        args = EmmbeddingPostViewSchema.postmap(form)
+        id_prefix = args.get('id_prefix')
+        collection = VectorService(args.get('collection_name'))
+        documents = args.get('documents', [])
+        metadatas = args.get('metadatas', [])
+        log.info('metadatas;: %s', metadatas)
+        for i, doc in enumerate(documents):
+            vid = f"{id_prefix}_{i}"
+            collection.add(
+                ids=[vid],
+                documents=[doc],
+                metadatas=[metadatas[i]]
+            )
+        return jsonify({'response': args}), 200
