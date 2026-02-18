@@ -81,5 +81,5 @@ gmap_apikey: AIzaSyCPWpYiyZPZTIoVN791X-zpwPDABRRh5u4
 
 #AI
 VECTOR_CONFIG:
-    host: localhost
+    host: chromadb
     port: 8000

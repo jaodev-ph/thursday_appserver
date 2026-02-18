@@ -18,9 +18,9 @@ TAGS = ['Chat']
 log = getLogger(f"{APP_TITLE}.api.v1.embeddings")
 
 class EmmbeddingPostViewSchema(ExtSchema):
-    ids = fields.List(required=True, default=[])
-    documents = fields.List(required=True, default=[])
-    metadatas = fields.List(required=True, default=[])
+    ids = fields.List(fields.String(), required=True, default=[])
+    documents = fields.List(fields.String(), required=True, default=[])
+    metadatas = fields.List(fields.String(), required=True, default=[])
 
 class EmbeddingPostView(ExtSwaggerView):
     tags = TAGS

@@ -31,10 +31,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
 FROM prereqs AS pip
 
 # RUN pip3 install -r requirements.txt --upgrade pip --retries 30 --default-timeout=60
-
+RUN pip3 install git+https://jaodev-ph:${GITHUB_TOKEN}@github.com/jaodev-ph/python-library
 COPY ./requirements.txt /
 RUN pip3 install -r requirements.txt --retries 30 --default-timeout=60
-RUN pip3 install git+https://jaodev-ph:${GITHUB_TOKEN}@github.com/jaodev-ph/python-library
 
 
 COPY . /srv/thursday
