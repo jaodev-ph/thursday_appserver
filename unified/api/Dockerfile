@@ -1,7 +1,7 @@
 # APP SETUP
 FROM ghcr.io/jaodev-ph/thursday_appserver/base:latest AS app-setup
 
-EXPOSE 5031
+EXPOSE 3301
 COPY ./requirements.txt /
 ARG GITHUB_TOKEN
 RUN echo "Token is: ${GITHUB_TOKEN}"

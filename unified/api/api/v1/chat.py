@@ -67,8 +67,8 @@ class ChatPostView(ExtSwaggerView):
     def post(self):
         """ 
         Chat post view
-        """
-        args = ChatPostViewSchema.postmap(request.json)
+        """ 
+        args = ChatPostViewSchema.postmap(request.json) 
         log.info('args: %s', args)
         question = args.get('question')
         result = rag_chat(question)

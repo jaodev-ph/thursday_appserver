@@ -9,43 +9,7 @@ services:
             TZ: "Asia/Manila"
             GIT_HASH: "${GIT_HASH:-latest}"
         dns: 8.8.8.8
-    # nginx:
-    #     container_name: thursday_nginx
-    #     image: nginx:alpine
-    #     restart: always
-    #     # links:
-    #     #   - rtsp2mjpg
-    #     ports:
-    #       - "5088:80"
-    #     volumes:
-    #       - ./unified/nginx/default.conf:/etc/nginx/conf.d/default.conf:ro
-    # spa:
-    #     container_name: swift_spa
-    #     image: ghcr.io/entropysolution/swift_appserver/spa
-    #     build:
-    #         context: unified/spa
-    #         target: development
-    #     dns: 8.8.8.8
-    #     ports:
-    #         - '5032:5032'
-    #     restart: unless-stopped
-    #     depends_on:
-    #         - api
-    #     volumes:
-    #         - ./unified/spa:/srv/app
-    #     environment:
-    #         VUE_APP_SWIFT_ADMIN_BASE: "http://192.168.18.58:5088"
-    #         VUE_APP_SWIFT_ADMIN_API: "http://192.168.18.58:5088/api"
-    #         VUE_APP_ADMIN_KEY: "83055cb1-ddaa-40c1-a4a0-f994cea55450"
-    #         VUE_APP_SOCKETIO_URL: http://192.168.18.58:5031
-    #         VUE_APP_PROXY_URL: http://192.168.18.58:5088/api
-    #         VUE_APP_WS_URL: ws://192.168.18.58:5088/ws
-    #         VUE_APP_SIP_HOST: reachsip.entropyph.com
-    #         VUE_APP_SWIFT_MAP: "http://192.168.18.58:5088/map"
-    #         VUE_APP_SWIFT_OSRM: "http://192.168.18.58:5088/route"
-    #         VUE_APP_SWIFT_NOMINATIM: "http://192.168.18.58:5088/geocoding"
-    #         VUE_APP_SWIFT_MAP_SECRET_KEY: "SWIFTentRopyTecHnologyAppSecret2025"
-        # command: ['ping', 'localhost']
+
     api:
         container_name: thursday_api
         image: ghcr.io/jaodev-ph/thursday_appserver/api
@@ -78,24 +42,22 @@ services:
         volumes:
             - thursday-mongodb-data:/data/db
         restart: unless-stopped
-        networks:
-            - default
         ports:
             - '27040:27017'
         environment:
             MONGO_INITDB_ROOT_USERNAME: 35d1d55b448d49e18bb51680cef60824
             MONGO_INITDB_ROOT_PASSWORD: 36374aa396384fa1b20666c189cfb4a4
             TZ: "Asia/Manila"
-        healthcheck:
-            test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
-            interval: 30s
-            timeout: 10s
-            retries: 5
-            start_period: 10s
-        logging:
-            driver: "json-file"
-            options:
-                max-size: "256m"
+        # healthcheck:
+        #     test: echo 'db.runCommand("ping").ok' | mongo localhost:27017/test --quiet
+        #     interval: 30s
+        #     timeout: 10s
+        #     retries: 5
+        #     start_period: 10s
+        # logging:
+        #     driver: "json-file"
+        #     options:
+        #         max-size: "256m"
 
     ollama:
         image: ollama/ollama:latest

@@ -14,7 +14,7 @@ from common.dict_tools import merge_dicts
 
 socketio = SocketIO(message_queue=f'redis://:{REDIS_PASSWORD}@{SOCKETIO_REDIS_HOST}:6379/{SOCKETIO_REDIS_CHANNEL}')
 
-log = getLogger('swift.ext')
+log = getLogger('thrusday.ext')
 api_route_config = {
     'origin': '*',
     'methods': ['OPTIONS', 'GET', 'POST', 'PUT', 'DELETE'],

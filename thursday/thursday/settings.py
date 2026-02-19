@@ -6,10 +6,10 @@ from socket import gethostname
 from copy import deepcopy, copy
 from common.dict_tools import merge_dicts, merge_recursion
 
-CACHE_REDIS_HOST = CACHE_REDIS_CHANNEL = REDIS_PASSWORD = None
+CACHE_REDIS_HOST = CACHE_REDIS_CHANNEL = REDIS_PASSWORD = True
 
 def load_settings():
-	# Default configuration
+	# Default configuration  
 	defaults = {}
 	with open(path.join(path.dirname(path.abspath(__file__)), 'default_settings.yaml'), 'r') as stream:
 		try:

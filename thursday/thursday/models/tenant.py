@@ -11,7 +11,7 @@ from thursday.settings import DEFAULT_TIMEZONE
 log = getLogger(f"{APPSERVER_NAME}.models.tenant")
 
 
-class Tenant(Model):
+class Tenant(Model):  
     TEMPLATE = {
         'name': '',
         'contact_number': '',
@@ -32,9 +32,9 @@ class Tenant(Model):
             ('name', 10),
         ]
     }
-
+ 
     class Meta:
-        collection = 'tenants'
+        collection = 'tenantss'
         host = HOST
         database = DATABASE
         username = USERNAME

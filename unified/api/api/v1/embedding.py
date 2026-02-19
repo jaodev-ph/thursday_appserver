@@ -48,7 +48,7 @@ class EmbeddingPostView(ExtSwaggerView):
     }]
     def post(self):
         """ 
-        Embedding Post View
+        Embedding Post View er
         """
         form = request.json
         args = EmmbeddingPostViewSchema.postmap(form)
