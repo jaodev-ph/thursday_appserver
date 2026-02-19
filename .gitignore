@@ -15,4 +15,6 @@ tmp/
 test.py
 htmlcov/
 .coverage
-.env
+
+__pycache__/
+*.pyc
