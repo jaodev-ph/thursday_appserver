@@ -13,10 +13,10 @@ from api.v1.ext import abort, ExtSchema, DefaultResponsesWith, PostResultSchema,
     SOCKETIO_REDIS_HOST, SOCKETIO_REDIS_CHANNEL, REDIS_PASSWORD, parseValidationError, FILES_PARAMETERS
 #models
 from thursday.models.tenant import Tenant
-
+from thursday.settings import APP_TITLE
 MODULE_NAME = 'Tenant'
 TAGS = [MODULE_NAME]
-log = getLogger(f"{APP_TITLE}.api.v1.chat")
+log = getLogger(f"{APP_TITLE}.api.v1.chat2")
 
 
 
@@ -53,6 +53,7 @@ class TenantGetView(ExtSwaggerView):
         Fetch By ID
         """
         record = Tenant.getDocument(_id)
+        log.info('record: %s', record)
         if record:
             return abort(404, msg=f"{MODULE_NAME} not found")
         result = TenantPostViewSchema.getmaps(record)
@@ -87,4 +88,5 @@ class TenantPostView(ExtSwaggerView):
         Create Post view
         """
         pass
+        log.info("try: %s", log)
         return jsonify({'sucecss': True}), 200

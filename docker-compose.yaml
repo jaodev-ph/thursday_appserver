@@ -31,7 +31,7 @@ services:
             - ./thursday:/srv/thursday
         environment:
             PYTHONIOENCODING: 'utf-8'
-            PYTHONPATH: "${PYTHONPATH}:/thursday/thursday"
+            PYTHONPATH: "${PYTHONPATH}:/srv/thursday"
             TZ: "Asia/Manila"
             OLLAMA_HOST: http://ollama:11434
         # command: ['ping', 'localhost']

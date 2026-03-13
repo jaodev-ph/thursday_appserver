@@ -5,25 +5,25 @@ from common.jsonify import json_decode, json_encode
 from common.dict_tools import merge_dicts
 from common.time_utils import convert_date_to_str
 
-from . import HOST, DATABASE, USERNAME, PASSWORD, REPLICASET, Model, Index, fields, ObjectId, merge_dicts, validate, process_query, APPSERVER_NAME
+from . import HOST, DATABASE, USERNAME, PASSWORD, REPLICASET, Model, Index, fields, ObjectId, merge_dicts, validate, process_query
 
-from thursday.settings import DEFAULT_TIMEZONE
-log = getLogger(f"{APPSERVER_NAME}.models.tenant")
+from thursday.settings import DEFAULT_TIMEZONE, APP_TITLE
+log = getLogger(f"{APP_TITLE}.models.tenant")
 
 
-class Tenants(Model):  
+class Tenant(Model):  
     TEMPLATE = {
         'name': '',
         'contact_number': '',
         'email_address': '',
         'address': '',
-        'logo': '',,
+        'logo': '',
         'geolocation': [],
         'bot_id': None,
         'business_type': None
     }
 
-     validation = {
+    validation = {
         'field_types': [  # you can skip fields with type of 'string'
             ('messenger_integration', dict),
         ],
@@ -71,11 +71,13 @@ class Tenants(Model):
     def getDocument(cls, filters):
         if isinstance(filters, ObjectId):
             filters = {'_id': filters}
+        log.info('getting documents1')
         return cls.collection.find_one(filters)
     
     @classmethod
     def getDocuments(cls, filters=None, projection=None, sort_by=None):
         output = cls.collection.find(filters, projection)
+        log.info('getting documents')
         if sort_by:
             output.sort(sort_by, 1)
         return output

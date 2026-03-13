@@ -9,14 +9,13 @@ from api.v1.ext import ExtSchema, DefaultResponsesWith, PostResultSchema, PostSu
     PAGINATION_PARAMETERS, ReferencesDictSchema, DatatableViewSchemaResponseSchema, DatatableViewSchema, DeleteSelectedViewSchema , \
     SOCKETIO_REDIS_HOST, SOCKETIO_REDIS_CHANNEL, REDIS_PASSWORD, parseValidationError, FILES_PARAMETERS
 
-from thursday.settings import APP_TITLE
 
 from thursday.vector_service import VectorService
 
 import ollama
 
 TAGS = ['Chat']
-log = getLogger(f"{APP_TITLE}.api.v1.chat")
+log = getLogger(f"chat.api.v1.chat")
 
 def detect_intent(query):
     prompt = f"""
