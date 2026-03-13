@@ -20,6 +20,9 @@ reload(sys)
 import warnings
 from gevent import monkey
 from logging import basicConfig, getLogger, CRITICAL
+from dotenv import load_dotenv
+import os
+
 
 warnings.filterwarnings('ignore')
 monkey.patch_all()
@@ -31,6 +34,7 @@ log.setLevel(10 if DEBUG else 30)
 from thursday.migration import  initialize
 log.info('Executing migration scripts..')
 initialize()
+load_dotenv()
 
 from api import app
 log.info('Application loaded')

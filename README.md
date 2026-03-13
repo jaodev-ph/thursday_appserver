@@ -6,15 +6,12 @@ docker login ghcr.io
 
 
 
-SETTING UP
+### SETTING UP
 
-OLLAMA MODELS
+# OLLAMA MODELS
     ollama pull llama3.2
     ollama pull mxbai-embed-large
-
-
-
-
+    
 {
   "collection_name": "shoppe",
   "id_prefix": "faqs",

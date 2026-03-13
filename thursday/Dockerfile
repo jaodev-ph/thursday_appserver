@@ -14,13 +14,7 @@ RUN apt-get update -y && \
         netcat \
         curl \
         git \
-        swig \
-        vim \
-        python3-setuptools \
-        python3-distutils \
-        python3-wheel \
-        build-essential \
-        && rm -rf /var/lib/apt/lists/*
+        swig
 
 
 
@@ -29,12 +23,12 @@ RUN pip3 install --upgrade pip setuptools wheel
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y tzdata
 
 # PIP
-FROM prereqs AS pip
+# FROM prereqs AS pip
 
 # RUN pip3 install -r requirements.txt --upgrade pip --retries 30 --default-timeout=60
 COPY ./requirements.txt /
 RUN pip3 install -r requirements.txt --retries 30 --default-timeout=60
-RUN pip3 install git+https://jaodev-ph:${GITHUB_TOKEN}@github.com/jaodev-ph/python-library
+RUN pip3 install git+https://jaodev-ph:${GITHUB_TOKEN}@github.com/jaodev-ph/python-library@v1.1.0
 
 
 COPY . /srv/thursday

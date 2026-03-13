@@ -26,3 +26,10 @@ add_api_url_rules(app, [
    ('/embeddings/<string:collection_name>', EmbeddingDeleteView, 'DELETE')
 ])
 
+
+from api.v1.tenants import TenantPostView, TenantGetView
+
+add_api_url_rules(app, [
+   ('/tenants/<objectid:_id>', TenantGetView, 'GET'),
+   ('/tenants', TenantPostView, 'POST'),
+])

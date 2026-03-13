@@ -4,9 +4,8 @@ from pymongo import MongoClient
 from thursday.settings import DB_CONFIG
 from common.crypto import make_hash
 from common.dict_tools import merge_dicts, merge_in_place, merge_recursion
-from micromongo4 import Model, Index, fields, validate
+from thursday.micromongo4 import Model, Index, fields, validate
 
-from thursday.references import categories, accounts
 
 APPSERVER_NAME = 'thursday'
 HOST = DB_CONFIG[APPSERVER_NAME]['location']

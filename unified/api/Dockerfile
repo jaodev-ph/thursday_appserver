@@ -5,7 +5,7 @@ EXPOSE 3301
 COPY ./requirements.txt /
 ARG GITHUB_TOKEN
 RUN echo "Token is: ${GITHUB_TOKEN}"
-RUN pip3 install git+https://jaodev-ph:${GITHUB_TOKEN}@github.com/jaodev-ph/python-library
+RUN pip3 install git+https://jaodev-ph:${GITHUB_TOKEN}@github.com/jaodev-ph/python-library@v1.1.0
 
 RUN pip3 install -r /requirements.txt --retries 30 --default-timeout=60
 
@@ -15,7 +15,7 @@ COPY . /srv/app
 WORKDIR /srv/app
 ENV ROOTPATH /srv/app
 CMD gunicorn \
-    --bind 0.0.0.0:5031 \
+    --bind 0.0.0.0:3301 \
     --worker-class geventwebsocket.gunicorn.workers.GeventWebSocketWorker \
     --workers 1 \
     --threads 2 \
@@ -37,7 +37,7 @@ RUN echo "${RELEASE}" | tee -a /srv/release.nfo
 RUN rm -rf /srv/hivesac /requirements*.txt
 RUN apt-get autoremove -y
 CMD gunicorn \
-    --bind 0.0.0.0:5031 \
+    --bind 0.0.0.0:3301 \
     --worker-class geventwebsocket.gunicorn.workers.GeventWebSocketWorker \
     --workers 2 \
     --threads 4 \

@@ -19,12 +19,12 @@ services:
             args:
                 GITHUB_TOKEN: ${GITHUB_TOKEN}
         ports:
-            - '5031:5031'
+            - '3301:3301'
         restart: unless-stopped
         depends_on:
             - base
             - mongodb
-            - ollama
+            # - ollama
             - chromadb
         volumes:
             - ./unified/api:/srv/app
@@ -59,14 +59,14 @@ services:
         #     options:
         #         max-size: "256m"
 
-    ollama:
-        image: ollama/ollama:latest
-        container_name: thursday_ollama
-        ports:
-            - "11434:11434"
-        volumes:
-            - thursday-ollama-data:/root/.ollama
-        restart: unless-stopped
+    # ollama:
+    #     image: ollama/ollama:latest
+    #     container_name: thursday_ollama
+    #     ports:
+    #         - "11434:11434"
+    #     volumes:
+    #         - thursday-ollama-data:/root/.ollama
+    #     restart: unless-stopped
 
     chromadb:
         image: ghcr.io/chroma-core/chroma:latest
@@ -81,6 +81,6 @@ services:
 
 volumes:
     thursday-mongodb-data:
-    thursday-ollama-data:
+    # thursday-ollama-data:
     thursday-chroma-data:
 

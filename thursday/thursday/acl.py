@@ -16,60 +16,6 @@ auth_objects = {
         'default': ACL_INHERITED, 
         'sort': 10
     },
-    'transactions': {
-        'name': 'Transaction', 'parent_id': 
-        'root', 'possible_privileges': [0, 1, 2, 3, 4],
-        'icon': 'mdi mdi-chevron-double-right', 
-        'default': ACL_INHERITED, 
-        'sort': 20
-    },
-    'accounts': {
-        'name': 'Accounts', 
-        'parent_id': 'root', 
-        'possible_privileges': [0, 1, 2, 3, 4],
-        'icon': 'mdi mdi-bank', 
-        'default': ACL_INHERITED, 
-        'sort': 30
-    },
-	'categories': {
-        'name': 'Categories', 
-        'parent_id': 'root', 
-        'possible_privileges': [0, 1, 2, 3, 4],
-        'icon': 'mdi mdi-format-list-text',
-        'default': ACL_INHERITED, 
-        'sort': 40
-    },
-	'plan': {
-        'name': 'Plan', 'parent_id': 
-        'root', 'possible_privileges': [0, 1, 2, 3, 4],
-        'icon': 'mdi mdi-table', 
-        'default': ACL_INHERITED, 
-        'sort': 50
-    },
-    'users': {
-        'name': 'Users', 
-        'parent_id': 'root', 
-        'possible_privileges': [0, 1, 2, 3, 4],
-        'icon': 'mdi mdi-account-group', 
-        'default': ACL_INHERITED, 
-        'sort': 50
-    },
-	'sessions' : {
-        'name': 'Sessions', 
-        'parent_id': 'root', 
-        'possible_privileges': [0, 1, 2, 3, 4],
-        'icon': 'mdi mdi-table', 
-        'default': ACL_NO_ACCESS, 
-        'sort': 50
-    },
-    'recurrence': {
-        'name': 'Recurrence',
-        'parent_id': 'root', 
-        'possible_privileges': [0, 1, 2, 3, 4],
-        'icon': 'mdi mdi-table', 
-        'default': ACL_INHERITED, 
-        'sort': 60
-    }
 }
 
 

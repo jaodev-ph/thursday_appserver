@@ -11,16 +11,11 @@ from thursday.settings import DEFAULT_TIMEZONE
 log = getLogger(f"{APPSERVER_NAME}.models.tenant")
 
 
-class Tenants(Model):  
+class Bot(Model):  
     TEMPLATE = {
         'name': '',
-        'contact_number': '',
-        'email_address': '',
-        'address': '',
-        'logo': '',,
-        'geolocation': [],
-        'bot_id': None,
-        'business_type': None
+        'tenant_id': None
+        'model': None,
     }
 
      validation = {
@@ -47,35 +42,28 @@ class Tenants(Model):
     
     @classmethod
     def search(cls, query, columns, required_filters={}):
-        fields, limit, start, sort, query_text = process_query(query, columns)
-        log.info('filters: %s', required_filters)
-        total_records = cls.collection.count_documents(filters)
-        result = cls.collection.find(filters, fields)
-        records = list(result.sort(sort).skip(start).limit(limit))
-        return records, total_records, result.count()
+        pass
 
     @classmethod
     def create(cls, args):
-        validate(args, cls.validation)
-        args = merge_dicts(copy.deepcopy(cls.TEMPLATE), args, True)
-        record = cls(args).save()
-        return record
+        is_invalid = validate(args, cls.validation)
+        if is_invalid:
+            raise is_invalid
 
-    def update(self, args, validate=True):
-        if validate:
-            validate(args, self.validation)
+        # SECTION: Check existing
+        instance = cls.collection.find_one({'username': args['username']})
+        if instance is not None:
+            raise ValueError('Username %s already exists' % (args['username']))
+        # END
+
+        instance = cls(args).save()
+        return instance
+
+
+    def update(self, args):
+        validate(args, self.validation)
+        self.hash_password(args)
+        args.pop('_id', '')
         merge_dicts(self, args, True)
         self.save()
-
-    @classmethod
-    def getDocument(cls, filters):
-        if isinstance(filters, ObjectId):
-            filters = {'_id': filters}
-        return cls.collection.find_one(filters)
     
-    @classmethod
-    def getDocuments(cls, filters=None, projection=None, sort_by=None):
-        output = cls.collection.find(filters, projection)
-        if sort_by:
-            output.sort(sort_by, 1)
-        return output
