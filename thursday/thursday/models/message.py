@@ -1,3 +1,4 @@
+import copy
 import pytz
 from logging import getLogger
 from datetime import datetime
@@ -15,33 +16,66 @@ class Message(Model):
     TEMPLATE = {
         'tenant_id': None,
         'conversation_id': None,
-        'channel_id': None,
         'customer_id': None,
-        'status': '',
-        'token_usage': '',
+        'status': 0, #
+        'content': '',
+        'sender_type': 0, # SENDER_TYPES
         'token_usage': {
             'type': '', # input/output
             'value': ''
         }
+        'active': True
     }
     validation = {
         'field_types': [  # you can skip fields with type of 'string'
-            ('messenger_integration', dict),
         ],
-        'required': ['name', 'contact_number', 'email_address', 'address'],
+        'required': ['content'],
         'minlength': [
-            ('name', 3),
-            ('name', 10),
+            ('content', 2),
         ]
     }
  
     class Meta:
-        collection = 'conversations'
+        collection = 'messages'
         host = HOST
         database = DATABASE
         username = USERNAME
         password = PASSWORD
-        indices = (
-            Index('name', unique=True),
-        )
+        indices = ()
         replicaset = REPLICASET
+
+    @classmethod
+    def search(cls, query, columns, required_filters={}):
+        fields, limit, start, sort, query_text = process_query(query, columns)
+        log.info('filters: %s', required_filters)
+        total_records = cls.collection.count_documents(required_filters)
+        result = cls.collection.find(required_filters, fields)
+        records = list(result.sort(sort).skip(start).limit(limit))
+        return records, total_records, result.count()
+
+    @classmethod
+    def create(cls, args):
+        validate(args, cls.validation)
+        args = merge_dicts(copy.deepcopy(cls.TEMPLATE), args, True)
+        record = cls(args).save()
+        return record
+
+    def update(self, args):
+        validate(args, self.validation, partial=True)
+        merge_dicts(self, args, True)
+        self.save()
+
+    @classmethod
+    def getDocument(cls, filters):
+        if isinstance(filters, ObjectId):
+            filters = {'_id': filters}
+        log.info('getting documents1')
+        return cls.collection.find_one(filters)
+
+    @classmethod
+    def getDocuments(cls, filters=None, projection=None, sort_by=None):
+        output = cls.collection.find(filters, projection)
+        log.info('getting documents')
+        if sort_by:
+            output.sort(sort_by, 1)
+        return output

@@ -1,3 +1,4 @@
+import copy
 import pytz
 from logging import getLogger
 from datetime import datetime
@@ -13,28 +14,27 @@ log = getLogger(f"{APPSERVER_NAME}.models.tenant")
 
 class Customer(Model):  
     TEMPLATE = {
+        'tenant_id': None,
         'name': '',
-        'tenant_id': None
+        'avatart': None,
         'contact_number': '',
         'email_address': '',
         'address': '',
-        'acl_profile_id': None,
-
+        'channel_type': 0, # CHANNEL_TYPES
+        'active': True,
     }
 
      validation = {
         'field_types': [  # you can skip fields with type of 'string'
-            ('messenger_integration', dict),
         ],
-        'required': ['name', 'contact_number', 'email_address', 'address'],
+        'required': ['name'],
         'minlength': [
             ('name', 3),
-            ('name', 10),
         ]
     }
  
     class Meta:
-        collection = 'tenants'
+        collection = 'customers'
         host = HOST
         database = DATABASE
         username = USERNAME
@@ -43,3 +43,39 @@ class Customer(Model):
             Index('name', unique=True),
         )
         replicaset = REPLICASET
+
+    @classmethod
+    def search(cls, query, columns, required_filters={}):
+        fields, limit, start, sort, query_text = process_query(query, columns)
+        log.info('filters: %s', required_filters)
+        total_records = cls.collection.count_documents(required_filters)
+        result = cls.collection.find(required_filters, fields)
+        records = list(result.sort(sort).skip(start).limit(limit))
+        return records, total_records, result.count()
+
+    @classmethod
+    def create(cls, args):
+        validate(args, cls.validation)
+        args = merge_dicts(copy.deepcopy(cls.TEMPLATE), args, True)
+        record = cls(args).save()
+        return record
+
+    def update(self, args):
+        validate(args, self.validation, partial=True)
+        merge_dicts(self, args, True)
+        self.save()
+
+    @classmethod
+    def getDocument(cls, filters):
+        if isinstance(filters, ObjectId):
+            filters = {'_id': filters}
+        log.info('getting documents1')
+        return cls.collection.find_one(filters)
+
+    @classmethod
+    def getDocuments(cls, filters=None, projection=None, sort_by=None):
+        output = cls.collection.find(filters, projection)
+        log.info('getting documents')
+        if sort_by:
+            output.sort(sort_by, 1)
+        return output

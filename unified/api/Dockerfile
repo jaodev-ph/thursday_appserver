@@ -21,6 +21,7 @@ CMD gunicorn \
     --threads 2 \
     --worker-connections 128 \
     --proxy-protocol \
+    --proxy-protocol \
     --reload \
     --max-requests 256 \
     --worker-connections 512 \

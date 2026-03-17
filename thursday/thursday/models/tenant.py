@@ -1,9 +1,11 @@
+import copy
 import pytz
 from logging import getLogger
 from datetime import datetime
 from common.jsonify import json_decode, json_encode
 from common.dict_tools import merge_dicts
 from common.time_utils import convert_date_to_str
+
 
 from . import HOST, DATABASE, USERNAME, PASSWORD, REPLICASET, Model, Index, fields, ObjectId, merge_dicts, validate, process_query
 
@@ -20,17 +22,16 @@ class Tenant(Model):
         'logo': '',
         'geolocation': [],
         'bot_id': None,
-        'business_type': None
+        'business_type': None,
+        'active': True,
     }
 
     validation = {
         'field_types': [  # you can skip fields with type of 'string'
-            ('messenger_integration', dict),
         ],
         'required': ['name', 'contact_number', 'email_address', 'address'],
         'minlength': [
             ('name', 3),
-            ('name', 10),
         ]
     }
  
@@ -49,10 +50,12 @@ class Tenant(Model):
     def search(cls, query, columns, required_filters={}):
         fields, limit, start, sort, query_text = process_query(query, columns)
         log.info('filters: %s', required_filters)
+        filters = {}
+        merge_dicts(filters, required_filters, True)
         total_records = cls.collection.count_documents(filters)
         result = cls.collection.find(filters, fields)
         records = list(result.sort(sort).skip(start).limit(limit))
-        return records, total_records, result.count()
+        return records, total_records
 
     @classmethod
     def create(cls, args):
@@ -61,9 +64,8 @@ class Tenant(Model):
         record = cls(args).save()
         return record
 
-    def update(self, args, validate=True):
-        if validate:
-            validate(args, self.validation)
+    def update(self, args):
+        validate(args, self.validation, partial=True)
         merge_dicts(self, args, True)
         self.save()
 
@@ -81,3 +83,6 @@ class Tenant(Model):
         if sort_by:
             output.sort(sort_by, 1)
         return output
+
+    def remove(self):
+        return super(Tenant, self).remove()

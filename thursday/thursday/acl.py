@@ -16,22 +16,63 @@ auth_objects = {
         'default': ACL_INHERITED, 
         'sort': 10
     },
+    'tenants': {
+        'name': 'Tenants',
+        'parent_id': 'root',
+        'possible_privileges': [0, 1, 2, 3, 4],
+        'icon': 'mdi mdi-domain',
+        'default': ACL_INHERITED,
+        'sort': 20
+    },
+    'users': {
+        'name': 'Users',
+        'parent_id': 'root',
+        'possible_privileges': [0, 1, 2, 3, 4],
+        'icon': 'mdi mdi-account-group',
+        'default': ACL_INHERITED,
+        'sort': 30
+    },
+    'bots': {
+        'name': 'Bots',
+        'parent_id': 'root',
+        'possible_privileges': [0, 1, 2, 3, 4],
+        'icon': 'mdi mdi-robot',
+        'default': ACL_INHERITED,
+        'sort': 40
+    },
+    'conversations': {
+        'name': 'Conversations',
+        'parent_id': 'root',
+        'possible_privileges': [0, 1, 2, 3, 4],
+        'icon': 'mdi mdi-chat',
+        'default': ACL_INHERITED,
+        'sort': 50
+    },
+    'customers': {
+        'name': 'Customers',
+        'parent_id': 'root',
+        'possible_privileges': [0, 1, 2, 3, 4],
+        'icon': 'mdi mdi-account',
+        'default': ACL_INHERITED,
+        'sort': 60
+    },
+    'messages': {
+        'name': 'Messages',
+        'parent_id': 'root',
+        'possible_privileges': [0, 1, 2, 3, 4],
+        'icon': 'mdi mdi-message',
+        'default': ACL_INHERITED,
+        'sort': 70
+    },
+    'settings': {
+        'name': 'Settings',
+        'parent_id': 'root',
+        'possible_privileges': [0, 1, 2, 3, 4],
+        'icon': 'mdi mdi-cog',
+        'default': ACL_INHERITED,
+        'sort': 80
+    }
 }
-
-
-def get_jstree_parsed():
-    data = []
-    for key, val in auth_objects.items():
-        data.append({
-            'id': key,
-            'parent': '#' if val['parent_id'] is None else val['parent_id'],
-            'text': val.get('name'),
-            'state': {'opened': 'true'},
-            'icon': val.get('icon', 'mdi mdi-file'),
-            'possible_privileges': val['possible_privileges']
-        })
-    return { 'core': {'data': data}, 'themes': { 'name' : 'default' } }
-
 
 def get_admin_acl():
 	output = {}

@@ -27,9 +27,11 @@ add_api_url_rules(app, [
 ])
 
 
-from api.v1.tenants import TenantPostView, TenantGetView
-
+from api.v1.tenants import TenantPostView, TenantGetView, TenantPutView, TenantDeleteView, TenantPostInquiryViewSchema
 add_api_url_rules(app, [
    ('/tenants/<objectid:_id>', TenantGetView, 'GET'),
    ('/tenants', TenantPostView, 'POST'),
+   ('/tenants/inquiry', TenantPostInquiryViewSchema, 'POST'),
+   ('/tenants/<objectid:_id>', TenantPutView, 'PUT'),
+   ('/tenants/<objectid:_id>', TenantDeleteView, 'DELETE'), # delete tenant by id
 ])

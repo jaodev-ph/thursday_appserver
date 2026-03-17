@@ -1,6 +1,5 @@
 #test
 
-
 BUSINESS_TYPE = [
     ("ecommerce", "E-commerce / Retail"),
     ("finance", "Banking / Finance / Insurance"),
@@ -17,4 +16,21 @@ BUSINESS_TYPE = [
     ("transportation", "Transportation / Logistics"),
     ("automotive", "Automotive"),
     ("nonprofit", "Nonprofit / Community")
+]
+
+CHANNEL_TYPES = [
+    ("messenger", "Messenger"),
+]
+
+CONVERSATION_STATUS = [
+    ("active", "Active"),
+    ("inactive", "Inactive"),
+    ("archived", "Archived"),
+]
+
+SENDER_TYPES = [
+    ("customer", "Customer"),
+    ("bot", "Bot"),
+    ("system", "System"),
+    ("agent", "Agent"),
 ]

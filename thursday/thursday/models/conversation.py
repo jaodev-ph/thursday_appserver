@@ -15,16 +15,14 @@ class Conversation(Model):
     TEMPLATE = {
         'tenant_id': None,
         'bot_id': None,
-        'channel_id': None,
-        'customet_id': None,
-        'status': '',
-        'token_usage': ''
+        'channel_type': 0, # CHANNEL_TYPES
+        'customer_id': None,
+        'status': 0, # CONVERSATION_STATUS
     }
     validation = {
         'field_types': [  # you can skip fields with type of 'string'
-            ('messenger_integration', dict),
         ],
-        'required': ['name', 'contact_number', 'email_address', 'address'],
+        'required': ['tenant_id', 'bot_id', 'channel_type', 'customer_id', 'status'],
         'minlength': [
             ('name', 3),
             ('name', 10),
@@ -39,3 +37,39 @@ class Conversation(Model):
         password = PASSWORD
         indices = ()
         replicaset = REPLICASET
+
+    @classmethod
+    def search(cls, query, columns, required_filters={}):
+        fields, limit, start, sort, query_text = process_query(query, columns)
+        log.info('filters: %s', required_filters)
+        total_records = cls.collection.count_documents(required_filters)
+        result = cls.collection.find(required_filters, fields)
+        records = list(result.sort(sort).skip(start).limit(limit))
+        return records, total_records, result.count()
+
+    @classmethod
+    def create(cls, args):
+        validate(args, cls.validation)
+        args = merge_dicts(copy.deepcopy(cls.TEMPLATE), args, True)
+        record = cls(args).save()
+        return record
+
+    def update(self, args):
+        validate(args, self.validation, partial=True)
+        merge_dicts(self, args, True)
+        self.save()
+
+    @classmethod
+    def getDocument(cls, filters):
+        if isinstance(filters, ObjectId):
+            filters = {'_id': filters}
+        log.info('getting documents1')
+        return cls.collection.find_one(filters)
+
+    @classmethod
+    def getDocuments(cls, filters=None, projection=None, sort_by=None):
+        output = cls.collection.find(filters, projection)
+        log.info('getting documents')
+        if sort_by:
+            output.sort(sort_by, 1)
+        return output

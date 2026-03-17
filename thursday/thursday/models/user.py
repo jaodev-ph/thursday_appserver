@@ -13,13 +13,13 @@ log = getLogger(f"{APPSERVER_NAME}.models.tenant")
 
 class User(Model):  
     TEMPLATE = {
-        'name': '',
         'tenant_id': None
+        'name': '',
+        'username': '',
+        'password': None,
         'contact_number': '',
         'email_address': '',
         'address': '',
-        'acl_profile_id': None,
-
     }
 
      validation = {
@@ -34,7 +34,7 @@ class User(Model):
     }
  
     class Meta:
-        collection = 'tenants'
+        collection = 'users'
         host = HOST
         database = DATABASE
         username = USERNAME
@@ -46,7 +46,12 @@ class User(Model):
     
     @classmethod
     def search(cls, query, columns, required_filters={}):
-        pass
+        fields, limit, start, sort, query_text = process_query(query, columns)
+        log.info('filters: %s', required_filters)
+        total_records = cls.collection.count_documents(required_filters)
+        result = cls.collection.find(required_filters, fields)
+        records = list(result.sort(sort).skip(start).limit(limit))
+        return records, total_records, result.count()
 
     @classmethod
     def create(cls, args):
@@ -65,9 +70,23 @@ class User(Model):
 
 
     def update(self, args):
-        validate(args, self.validation)
+        validate(args, self.validation, partial=True)
         self.hash_password(args)
         args.pop('_id', '')
         merge_dicts(self, args, True)
         self.save()
     
+    @classmethod
+    def getDocument(cls, filters):
+        if isinstance(filters, ObjectId):
+            filters = {'_id': filters}
+        log.info('getting documents1')
+        return cls.collection.find_one(filters)
+
+    @classmethod
+    def getDocuments(cls, filters=None, projection=None, sort_by=None):
+        output = cls.collection.find(filters, projection)
+        log.info('getting documents')
+        if sort_by:
+            output.sort(sort_by, 1)
+        return output
