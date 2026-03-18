@@ -19,7 +19,7 @@ const pageTitle = computed(() => {
   <div
     class="shell"
     :data-bs-theme="theme"
-    :data-sidebar-open="isSidebarOpen"
+    :data-sidebar-open="isSidebarOpen ? 'true' : 'false'"
   >
     <Sidebar :open="isSidebarOpen" :items="NAV_ITEMS" />
 
@@ -49,7 +49,7 @@ const pageTitle = computed(() => {
 }
 
 .shell[data-sidebar-open='false'] {
-  grid-template-columns: 1fr;
+  grid-template-columns: 72px 1fr;
 }
 
 .main {
