@@ -1,1 +1,0 @@
-# for determining the plan

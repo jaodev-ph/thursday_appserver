@@ -35,3 +35,66 @@ add_api_url_rules(app, [
    ('/tenants/<objectid:_id>', TenantPutView, 'PUT'),
    ('/tenants/<objectid:_id>', TenantDeleteView, 'DELETE'), # delete tenant by id
 ])
+
+from api.v1.billings import BillingPostView, BillingGetView, BillingPutView, BillingDeleteView, BillingPostInquiryView
+add_api_url_rules(app, [
+   ('/billings/<objectid:_id>', BillingGetView, 'GET'),
+   ('/billings', BillingPostView, 'POST'),
+   ('/billings/inquiry', BillingPostInquiryView, 'POST'),
+   ('/billings/<objectid:_id>', BillingPutView, 'PUT'),
+   ('/billings/<objectid:_id>', BillingDeleteView, 'DELETE'),
+])
+
+from api.v1.customers import CustomerPostView, CustomerGetView, CustomerPutView, CustomerDeleteView, CustomerPostInquiryView
+add_api_url_rules(app, [
+   ('/customers/<objectid:_id>', CustomerGetView, 'GET'),
+   ('/customers', CustomerPostView, 'POST'),
+   ('/customers/inquiry', CustomerPostInquiryView, 'POST'),
+   ('/customers/<objectid:_id>', CustomerPutView, 'PUT'),
+   ('/customers/<objectid:_id>', CustomerDeleteView, 'DELETE'),
+])
+
+from api.v1.bots import BotPostView, BotGetView, BotPutView, BotDeleteView, BotPostInquiryView
+add_api_url_rules(app, [
+   ('/bots/<objectid:_id>', BotGetView, 'GET'),
+   ('/bots', BotPostView, 'POST'),
+   ('/bots/inquiry', BotPostInquiryView, 'POST'),
+   ('/bots/<objectid:_id>', BotPutView, 'PUT'),
+   ('/bots/<objectid:_id>', BotDeleteView, 'DELETE'),
+])
+
+from api.v1.conversations import ConversationPostView, ConversationGetView, ConversationPutView, ConversationDeleteView, ConversationPostInquiryView
+add_api_url_rules(app, [
+   ('/conversations/<objectid:_id>', ConversationGetView, 'GET'),
+   ('/conversations', ConversationPostView, 'POST'),
+   ('/conversations/inquiry', ConversationPostInquiryView, 'POST'),
+   ('/conversations/<objectid:_id>', ConversationPutView, 'PUT'),
+   ('/conversations/<objectid:_id>', ConversationDeleteView, 'DELETE'),
+])
+
+from api.v1.messages import MessagePostView, MessageGetView, MessagePutView, MessageDeleteView, MessagePostInquiryView
+add_api_url_rules(app, [
+   ('/messages/<objectid:_id>', MessageGetView, 'GET'),
+   ('/messages', MessagePostView, 'POST'),
+   ('/messages/inquiry', MessagePostInquiryView, 'POST'),
+   ('/messages/<objectid:_id>', MessagePutView, 'PUT'),
+   ('/messages/<objectid:_id>', MessageDeleteView, 'DELETE'),
+])
+
+from api.v1.users import UserPostView, UserGetView, UserPutView, UserDeleteView, UserPostInquiryView
+add_api_url_rules(app, [
+   ('/users/<objectid:_id>', UserGetView, 'GET'),
+   ('/users', UserPostView, 'POST'),
+   ('/users/inquiry', UserPostInquiryView, 'POST'),
+   ('/users/<objectid:_id>', UserPutView, 'PUT'),
+   ('/users/<objectid:_id>', UserDeleteView, 'DELETE'),
+])
+
+from api.v1.acl_profiles import AclProfilePostView, AclProfileGetView, AclProfilePutView, AclProfileDeleteView, AclProfilePostInquiryView
+add_api_url_rules(app, [
+   ('/acl_profiles/<objectid:_id>', AclProfileGetView, 'GET'),
+   ('/acl_profiles', AclProfilePostView, 'POST'),
+   ('/acl_profiles/inquiry', AclProfilePostInquiryView, 'POST'),
+   ('/acl_profiles/<objectid:_id>', AclProfilePutView, 'PUT'),
+   ('/acl_profiles/<objectid:_id>', AclProfileDeleteView, 'DELETE'),
+])

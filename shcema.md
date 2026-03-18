@@ -52,3 +52,10 @@ message
     - sender_type | int # SENDER_TYPES
     - token_usage | Dict
     - active | bool
+
+billing
+    - tenant_id | ObjectId
+    - plan | string
+    - start_date | datetime
+    - end_date | datetime
+    - status | int # BILLING_STATUS

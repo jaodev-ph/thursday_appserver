@@ -23,7 +23,7 @@ class Message(Model):
         'token_usage': {
             'type': '', # input/output
             'value': ''
-        }
+        },
         'active': True
     }
     validation = {

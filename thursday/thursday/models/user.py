@@ -13,7 +13,7 @@ log = getLogger(f"{APPSERVER_NAME}.models.tenant")
 
 class User(Model):  
     TEMPLATE = {
-        'tenant_id': None
+        'tenant_id': None,
         'name': '',
         'username': '',
         'password': None,
@@ -22,7 +22,7 @@ class User(Model):
         'address': '',
     }
 
-     validation = {
+    validation = {
         'field_types': [  # you can skip fields with type of 'string'
             ('messenger_integration', dict),
         ],

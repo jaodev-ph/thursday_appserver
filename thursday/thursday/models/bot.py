@@ -14,13 +14,13 @@ log = getLogger(f"{APPSERVER_NAME}.models.tenant")
 
 class Bot(Model):  
     TEMPLATE = {
-        'tenant_id': None
+        'tenant_id': None,
         'name': '',
         'model': '',
         'active': True,
     }
 
-     validation = {
+    validation = {
         'field_types': [  # you can skip fields with type of 'string'
         ],
         'required': ['name', 'model', 'tenant_id'],

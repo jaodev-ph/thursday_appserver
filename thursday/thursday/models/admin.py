@@ -7,7 +7,6 @@ from common.crypto import check_hash, make_hash
 from common.time_utils import utcnow
 from logging import getLogger
 
-from thursday.settings import PERSONNEL_CONFIG
 # END
 
 log = getLogger(f"{APPSERVER_NAME}.models.admin")

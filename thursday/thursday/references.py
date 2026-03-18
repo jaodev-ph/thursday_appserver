@@ -23,14 +23,35 @@ CHANNEL_TYPES = [
 ]
 
 CONVERSATION_STATUS = [
-    ("active", "Active"),
-    ("inactive", "Inactive"),
-    ("archived", "Archived"),
+    (0, "Active"),
+    (1, "Inactive"),
+    (2, "Archived"),
 ]
 
 SENDER_TYPES = [
-    ("customer", "Customer"),
-    ("bot", "Bot"),
-    ("system", "System"),
-    ("agent", "Agent"),
+    (1, "Customer"),
+    (2, "Bot"),
+    (3, "System"),
+    (4, "Agent"),
+]
+
+PLAN = {
+  "free": {
+    "name": "Free Tier",
+    "description": "Free tier for small businesses",
+    "token_limit": 10000,
+    "duration": 604800,  # 7 days in seconds
+  },
+  "pro": {
+    "name": "Pro Tier",
+    "description": "Pro tier for medium businesses",
+    "token_limit": 100000,
+    "duration": 604800,  # 7 days in seconds
+  }
+}
+
+BILLING_STATUS = [
+    (0, "Pending"),
+    (1, "Paid"),
+    (2, "Failed"),
 ]

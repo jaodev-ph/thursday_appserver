@@ -24,7 +24,7 @@ class Customer(Model):
         'active': True,
     }
 
-     validation = {
+    validation = {
         'field_types': [  # you can skip fields with type of 'string'
         ],
         'required': ['name'],
