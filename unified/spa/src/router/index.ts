@@ -1,5 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import tenant from './tenants'
 
+console.log('tenant', tenant)
 const routes = [
   {
     path: '/',
@@ -8,14 +10,22 @@ const routes = [
   },
   // Placeholder routes so the sidebar links work.
   // Replace these with real CRUD pages later.
-  { path: '/tenants', name: 'tenants', component: () => import('@/views/HomeView.vue') },
-  { path: '/bots', name: 'bots', component: () => import('@/views/HomeView.vue') },
-  { path: '/customers', name: 'customers', component: () => import('@/views/HomeView.vue') },
-  { path: '/conversations', name: 'conversations', component: () => import('@/views/HomeView.vue') },
-  { path: '/messages', name: 'messages', component: () => import('@/views/HomeView.vue') },
-  { path: '/users', name: 'users', component: () => import('@/views/HomeView.vue') },
-  { path: '/billings', name: 'billings', component: () => import('@/views/HomeView.vue') },
-  { path: '/acl-profiles', name: 'acl-profiles', component: () => import('@/views/HomeView.vue') },
+  {
+    path: '/admin',
+    name: 'admin',
+    component: () => import('@/views/AdminPage/index.vue'),
+    children: [
+      tenant,
+    ],
+  },
+  // { path: '/tenants', name: 'tenants', component: () => import('@/views/HomeView.vue') },
+  // { path: '/bots', name: 'bots', component: () => import('@/views/HomeView.vue') },
+  // { path: '/customers', name: 'customers', component: () => import('@/views/HomeView.vue') },
+  // { path: '/conversations', name: 'conversations', component: () => import('@/views/HomeView.vue') },
+  // { path: '/messages', name: 'messages', component: () => import('@/views/HomeView.vue') },
+  // { path: '/users', name: 'users', component: () => import('@/views/HomeView.vue') },
+  // { path: '/billings', name: 'billings', component: () => import('@/views/HomeView.vue') },
+  // { path: '/acl-profiles', name: 'acl-profiles', component: () => import('@/views/HomeView.vue') },
 ]
 
 const router = createRouter({
