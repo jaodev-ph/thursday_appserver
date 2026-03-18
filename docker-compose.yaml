@@ -10,6 +10,29 @@ services:
             GIT_HASH: "${GIT_HASH:-latest}"
         dns: 8.8.8.8
 
+    spa:
+        container_name: thursday_spa
+        image: ghcr.io/jaodev-ph/thursday_appserver/spa
+        build:
+            context: unified/spa
+            target: development
+            args:
+                GITHUB_TOKEN: ${GITHUB_TOKEN}
+        ports:
+            - '5173:5173'
+        restart: unless-stopped
+        depends_on:
+            - base
+            - mongodb
+            - api
+        volumes:
+            - ./unified/spa:/srv/app
+            - ./thursday:/srv/thursday
+        environment:
+            PYTHONIOENCODING: 'utf-8'
+            PYTHONPATH: "${PYTHONPATH}:/srv/thursday"
+            TZ: "Asia/Manila"
+        # command: ['ping', 'localhost']
     api:
         container_name: thursday_api
         image: ghcr.io/jaodev-ph/thursday_appserver/api
