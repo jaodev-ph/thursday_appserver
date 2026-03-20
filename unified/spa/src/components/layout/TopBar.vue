@@ -15,7 +15,7 @@ const emit = defineEmits<{
   <header class="navbar border-bottom px-3" style="min-height: 56px">
     <div class="d-flex align-items-center gap-2 w-100">
       <button class="btn btn-outline-secondary btn-sm" type="button" @click="emit('toggleSidebar')">
-        {{ sidebarOpen ? 'Hide' : 'Menu' }}
+        <i :class="sidebarOpen ? ['bi', 'bi-list', 'navbar-icon'] : ['bi', 'bi-menu-button', 'navbar-icon']" aria-hidden="true"></i>
       </button>
 
       <div class="fw-semibold text-truncate flex-grow-1">{{ title }}</div>

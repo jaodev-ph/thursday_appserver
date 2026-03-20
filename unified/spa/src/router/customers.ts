@@ -1,42 +1,43 @@
 import type { RouteRecordRaw } from 'vue-router'
-import BaseRoute from '@/views/TenantsPage/index.vue'
+import BaseRoute from '@/views/CustomersPage/index.vue'
 
-const moduleName = 'Tenants'
+const moduleName = 'Customers'
 
 const moduleRoutes: RouteRecordRaw = {
-  path: '/tenants',
+  path: '/customers',
   component: BaseRoute,
   meta: {
-    name: `${moduleName}Base`
+    name: `${moduleName}Base`,
   },
   redirect: { name: `${moduleName}Main` },
   children: [
     {
       path: '',
       name: `${moduleName}Main`,
-      component: () => import('@/views/TenantsPage/main.vue'),
+      component: () => import('@/views/CustomersPage/main.vue'),
       meta: {
-        title: 'Tenant',
+        title: 'Customers',
       },
     },
     {
       path: ':_id',
       name: `${moduleName}Detail`,
-      component: () => import('@/views/TenantsPage/detail.vue'),
+      component: () => import('@/views/CustomersPage/detail.vue'),
       meta: {
-        title: 'Tenant Detail',
+        title: 'Customer Detail',
       },
       props: true,
     },
     {
       path: 'new',
       name: `${moduleName}New`,
-      component: () => import('@/views/TenantsPage/detail.vue'),
+      component: () => import('@/views/CustomersPage/detail.vue'),
       meta: {
-        title: 'New Tenant',
+        title: 'New Customer',
       },
     },
   ],
 }
 
 export default moduleRoutes
+

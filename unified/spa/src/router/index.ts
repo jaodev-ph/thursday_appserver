@@ -1,31 +1,27 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import tenant from './tenants'
+import tenants from './tenants'
+import bots from './bots'
+import customers from './customers'
+import conversations from './conversations'
+import messages from './messages'
+import users from './users'
+import billings from './billings'
+import aclProfiles from './aclProfiles'
 
-console.log('tenant', tenant)
 const routes = [
   {
     path: '/',
     name: 'home',
     component: () => import('@/views/HomeView.vue'),
   },
-  // Placeholder routes so the sidebar links work.
-  // Replace these with real CRUD pages later.
-  {
-    path: '/admin',
-    name: 'admin',
-    component: () => import('@/views/AdminPage/index.vue'),
-    children: [
-      tenant,
-    ],
-  },
-  // { path: '/tenants', name: 'tenants', component: () => import('@/views/HomeView.vue') },
-  // { path: '/bots', name: 'bots', component: () => import('@/views/HomeView.vue') },
-  // { path: '/customers', name: 'customers', component: () => import('@/views/HomeView.vue') },
-  // { path: '/conversations', name: 'conversations', component: () => import('@/views/HomeView.vue') },
-  // { path: '/messages', name: 'messages', component: () => import('@/views/HomeView.vue') },
-  // { path: '/users', name: 'users', component: () => import('@/views/HomeView.vue') },
-  // { path: '/billings', name: 'billings', component: () => import('@/views/HomeView.vue') },
-  // { path: '/acl-profiles', name: 'acl-profiles', component: () => import('@/views/HomeView.vue') },
+  tenants,
+  bots,
+  customers,
+  conversations,
+  messages,
+  users,
+  billings,
+  aclProfiles,
 ]
 
 const router = createRouter({
