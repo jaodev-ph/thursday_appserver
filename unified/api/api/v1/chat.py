@@ -11,6 +11,7 @@ from api.v1.ext import ExtSchema, DefaultResponsesWith, PostResultSchema, PostSu
 
 
 from thursday.vector_service import VectorService
+from api.v1.classes.llm_provider import LLMProvider
 
 import ollama
 
@@ -68,10 +69,10 @@ class ChatPostView(ExtSwaggerView):
         Chat post view
         """ 
         args = ChatPostViewSchema.postmap(request.json) 
-        log.info('args: %s', args)
-        question = args.get('question')
-        result = rag_chat(question)
-        log.info('result: %s', result)
+        llm_provider = LLMProvider(name="gemini")
+        llm = llm_provider.get_model(model="gemini-2.0-flash")
+        llm_response = llm.invoke(args.get('question'))
+        log.info('llm_response: %s', llm_response)
         # messages = [{"role": "user", "content": question}]
 
         # response_text = ""
@@ -79,7 +80,7 @@ class ChatPostView(ExtSwaggerView):
         #     response_text += part["message"]["content"]
 
 
-        return jsonify({'response': result}), 200
+        return jsonify({'response': llm_response}), 200
 
 
 
