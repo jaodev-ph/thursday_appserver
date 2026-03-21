@@ -11,8 +11,11 @@ import aclProfiles from './aclProfiles'
 const routes = [
   {
     path: '/',
-    name: 'home',
-    component: () => import('@/views/HomeView.vue'),
+    name: 'thursday',
+    component: () => import('@/views/LandingPage/index.vue'),
+    meta: {
+      layout: 'landing',
+    },
   },
   tenants,
   bots,
