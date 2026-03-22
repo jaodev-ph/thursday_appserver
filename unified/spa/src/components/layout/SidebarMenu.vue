@@ -30,10 +30,29 @@ defineProps<{
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  text-decoration: none;
+  /* Theme-aware “link” color (follows light/dark via --bs-link-color) */
+  color: var(--bs-link-color);
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
 }
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: var(--bs-link-hover-color);
+  background-color: var(--bs-secondary-bg);
+}
+
 .nav-link.router-link-active {
   background-color: var(--bs-warning-bg-subtle);
   color: var(--bs-emphasis-color);
+}
+
+.nav-link.router-link-active:hover,
+.nav-link.router-link-active:focus-visible {
+  color: var(--bs-emphasis-color);
+  background-color: color-mix(in srgb, var(--bs-warning-bg-subtle) 78%, var(--bs-warning) 22%);
 }
 
 .nav-icon {

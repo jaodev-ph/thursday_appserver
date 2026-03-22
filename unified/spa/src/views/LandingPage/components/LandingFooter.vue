@@ -12,7 +12,7 @@ const links: Record<string, string[]> = {
       <div class="row g-4">
         <div class="col-12 col-md-4">
           <div class="d-flex align-items-center gap-2 fw-bold mb-2">
-            <span class="rounded-2 px-2 py-1 bg-warning text-dark">T</span>
+            <img src="/thursday.png" alt="Thursday AI" class="img-fluid" style="width: 24px; height: 24px;">
             Thursday AI
           </div>
           <div class="text-body-secondary small">

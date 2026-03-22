@@ -7,7 +7,7 @@ import { NAV_ITEMS } from '@/components/layout/nav'
 
 const route = useRoute()
 const isSidebarOpen = ref(true)
-const theme = ref<'dark' | 'light'>('dark')
+const theme = ref<'light' | 'dark'>('light')
 
 const pageTitle = computed(() => {
   const match = NAV_ITEMS.find((i) => i.to === route.path)

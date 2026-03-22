@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue'
 
+const chatOpen = ref(false)
+
 const form = reactive({
   message: '',
 })
@@ -44,7 +46,7 @@ function sendMessage() {
   <section class="py-5">
     <div class="container">
       <div class="row align-items-center g-4">
-        <div class="col-lg-7">
+        <div class="col-12 col-lg-10 col-xl-8 mx-lg-0">
           <div class="d-inline-flex align-items-center gap-2 mb-3" data-reveal>
             <span class="badge text-bg-warning fw-semibold rounded-pill px-3 py-2"
               >New: Knowledge Base Training</span
@@ -92,58 +94,139 @@ function sendMessage() {
             </div>
           </div>
         </div>
+      </div>
+    </div>
 
-        <div class="col-lg-5">
-          <div class="card shadow-sm border-0 rounded-4" data-reveal>
-            <div class="card-header bg-transparent border-bottom-0 pt-4 pb-2">
-              <div class="d-flex align-items-center justify-content-between">
-                <div class="fw-semibold">Live chatbot demo</div>
-                <span class="badge text-bg-warning rounded-pill">Widget</span>
+    <!-- Floating AI chat demo (FAB + panel) -->
+    <div class="chat-widget">
+      <Transition name="chat-panel">
+        <div
+          id="landing-chat-panel"
+          v-show="chatOpen"
+          class="card shadow border-0 rounded-4 chat-panel"
+          role="dialog"
+          aria-label="AI chat demo"
+        >
+          <div class="card-header bg-transparent border-bottom-0 pt-3 pb-2 px-3">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="fw-semibold d-flex align-items-center gap-2">
+                <span class="chat-panel__ai-icon rounded-circle d-inline-flex align-items-center justify-content-center">
+                  <i class="bi bi-stars" aria-hidden="true"></i>
+                </span>
+                AI assistant
               </div>
-              <div class="text-body-secondary small mt-1">No backend—mock responses for the landing page</div>
+              <button
+                type="button"
+                class="btn btn-sm btn-link text-body-secondary p-0"
+                aria-label="Close chat"
+                @click="chatOpen = false"
+              >
+                <i class="bi bi-x-lg"></i>
+              </button>
             </div>
+            <div class="text-body-secondary small mt-1">Demo — mock replies (no backend)</div>
+          </div>
 
-            <div class="card-body">
-              <div class="chat" role="log" aria-live="polite">
-                <div
-                  v-for="(m, idx) in messages"
-                  :key="idx"
-                  class="chat__row"
-                  :class="{ 'chat__row--user': m.role === 'user' }"
-                >
-                  <div class="chat__bubble" :class="{ 'chat__bubble--user': m.role === 'user' }">
-                    {{ m.text }}
-                  </div>
+          <div class="card-body pt-0 px-3 pb-3">
+            <div class="chat" role="log" aria-live="polite">
+              <div
+                v-for="(m, idx) in messages"
+                :key="idx"
+                class="chat__row"
+                :class="{ 'chat__row--user': m.role === 'user' }"
+              >
+                <div class="chat__bubble" :class="{ 'chat__bubble--user': m.role === 'user' }">
+                  {{ m.text }}
                 </div>
               </div>
+            </div>
 
-              <form class="mt-3 d-flex gap-2" @submit.prevent="sendMessage">
-                <input
-                  v-model="form.message"
-                  class="form-control"
-                  type="text"
-                  placeholder="Ask about WhatsApp, analytics, or pricing..."
-                  aria-label="Chat message"
-                />
-                <button class="btn btn-warning fw-semibold text-dark" type="submit">
-                  <i class="bi bi-send"></i>
-                </button>
-              </form>
+            <form class="mt-3 d-flex gap-2" @submit.prevent="sendMessage">
+              <input
+                v-model="form.message"
+                class="form-control form-control-sm"
+                type="text"
+                placeholder="Ask about WhatsApp, analytics, pricing…"
+                aria-label="Chat message"
+              />
+              <button class="btn btn-warning btn-sm fw-semibold text-dark" type="submit" aria-label="Send">
+                <i class="bi bi-send"></i>
+              </button>
+            </form>
 
-              <div class="text-body-secondary small mt-2">
-                Tip: try “How does analytics work?” or “Support WhatsApp?”
-              </div>
+            <div class="text-body-secondary small mt-2 mb-0">
+              Try: “analytics” or “WhatsApp”
             </div>
           </div>
         </div>
-      </div>
+      </Transition>
+
+      <button
+        type="button"
+        class="btn btn-warning rounded-circle chat-fab shadow-lg text-dark"
+        :aria-expanded="chatOpen"
+        aria-controls="landing-chat-panel"
+        aria-label="Open AI chat demo"
+        @click="chatOpen = !chatOpen"
+      >
+        <i class="bi bi-chat-dots-fill fs-3" aria-hidden="true"></i>
+      </button>
     </div>
   </section>
 </template>
 
 <style scoped>
+.chat-widget {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 1050;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.75rem;
+  pointer-events: none;
+}
+
+.chat-widget > * {
+  pointer-events: auto;
+}
+
+.chat-fab {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+}
+
+.chat-panel {
+  width: min(100vw - 2.5rem, 22rem);
+  max-height: min(70vh, 28rem);
+  overflow: hidden;
+}
+
+.chat-panel__ai-icon {
+  width: 2rem;
+  height: 2rem;
+  background: rgba(255, 193, 7, 0.35);
+  color: inherit;
+  font-size: 1rem;
+}
+
+.chat-panel-enter-active,
+.chat-panel-leave-active {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.chat-panel-enter-from,
+.chat-panel-leave-to {
+  opacity: 0;
+  transform: translateY(8px) scale(0.98);
+}
+
 .chat {
-  height: 260px;
+  height: min(200px, 38vh);
   overflow: auto;
   padding-right: 6px;
 }

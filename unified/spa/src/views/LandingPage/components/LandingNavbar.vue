@@ -19,7 +19,7 @@ function scrollToId(id: string) {
       <div class="container py-2">
         <a class="navbar-brand fw-bold" href="#" @click.prevent>
           <span class="d-inline-flex align-items-center gap-2">
-            <span class="rounded-2 px-2 py-1 bg-warning text-dark fw-bolder">T</span>
+            <img src="/thursday.png" alt="Thursday AI" class="img-fluid" style="width: 24px; height: 24px;">
             Thursday AI
           </span>
         </a>
