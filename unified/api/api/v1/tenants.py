@@ -1,5 +1,5 @@
 
-
+import time
 from logging import getLogger
 from bson.objectid import ObjectId
 from logging import getLogger
@@ -61,6 +61,7 @@ class TenantPostInquiryViewSchema(ExtSwaggerView):
         required_filters = {}
         log.info('request.json: %s', request.form)
         records, recordsTotal = Tenant.search(request.json, [], required_filters)
+        time.sleep(5)
         return jsonify({'total': recordsTotal, 'items': records })
 
 

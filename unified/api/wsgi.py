@@ -40,5 +40,5 @@ from api import app
 log.info('Application loaded')
 if __name__ == '__main__':
     from werkzeug.serving import run_simple
-    ADMIN_PORT = 3301
+    ADMIN_PORT = 5174
     run_simple('0.0.0.0', ADMIN_PORT, app, use_reloader=True, use_debugger=True)

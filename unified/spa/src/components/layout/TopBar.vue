@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import type { NavItem } from './nav'
 defineProps<{
   title: string
   sidebarOpen: boolean
   theme: 'dark' | 'light'
+  profileItems: NavItem[]
 }>()
 
 const emit = defineEmits<{
@@ -21,10 +23,37 @@ const emit = defineEmits<{
       <div class="fw-semibold text-truncate flex-grow-1">{{ title }}</div>
 
       <div class="d-flex gap-2">
-        <button class="btn btn-outline-warning btn-sm" type="button" @click="emit('toggleTheme')">
-          {{ theme === 'dark' ? 'Light' : 'Dark' }}
-        </button>
-        <button class="btn btn-outline-secondary btn-sm" type="button">Profile</button>
+        <div class="form-check form-switch d-flex align-items-center">
+          <input
+            class="form-check-input"
+            type="checkbox"
+            :id="'themeSwitch'"
+            :checked="theme === 'dark'"
+            @change="emit('toggleTheme')"
+          >
+          <label class="form-check-label ms-2" :for="'themeSwitch'">
+            <i :class="theme === 'dark' ? 'bi bi-moon-stars' : 'bi bi-sun'" aria-hidden="true"></i>
+          </label>
+        </div>
+        <div class="dropdown">
+          <button
+            class="btn btn-outline-secondary btn-sm dropdown-toggle"
+            type="button"
+            id="profileDropdown"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Profile
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+            <li v-for="item in profileItems" :key="item.to">
+              <RouterLink :to="item.to" class="dropdown-item">
+                <i :class="item.icon" aria-hidden="true"></i>
+                {{ item.label }}
+              </RouterLink>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </header>

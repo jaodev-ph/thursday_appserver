@@ -16,3 +16,9 @@ export const NAV_ITEMS: NavItem[] = [
   { label: 'ACL Profiles', to: '/acl-profiles', icon: 'bi-shield-lock' },
 ]
 
+export const PROFILE_ITEMS: NavItem[] = [
+  { label: 'My Account', to: '/profile', icon: 'bi-person' },
+  { label: 'Settings', to: '/settings', icon: 'bi-gear' },
+  { label: 'Logout', to: '/logout', icon: 'bi-box-arrow-right' },
+]
+

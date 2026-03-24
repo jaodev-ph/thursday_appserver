@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import Sidebar from '@/components/layout/Sidebar.vue'
 import TopBar from '@/components/layout/TopBar.vue'
-import { NAV_ITEMS } from '@/components/layout/nav'
+import { NAV_ITEMS, PROFILE_ITEMS} from '@/components/layout/nav'
 
 const route = useRoute()
 const isSidebarOpen = ref(true)
@@ -30,6 +30,7 @@ const pageTitle = computed(() => {
         :theme="theme"
         @toggle-sidebar="isSidebarOpen = !isSidebarOpen"
         @toggle-theme="theme = theme === 'dark' ? 'light' : 'dark'"
+        :profile-items="PROFILE_ITEMS"
       />
 
       <main class="content">

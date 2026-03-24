@@ -31,8 +31,7 @@ defineProps<{
   align-items: center;
   justify-content: flex-start;
   text-decoration: none;
-  /* Theme-aware “link” color (follows light/dark via --bs-link-color) */
-  color: var(--bs-link-color);
+  color: var(--bs-secondary-color);
   transition:
     color 0.15s ease,
     background-color 0.15s ease;
@@ -40,7 +39,7 @@ defineProps<{
 
 .nav-link:hover,
 .nav-link:focus-visible {
-  color: var(--bs-link-hover-color);
+  color: var(--bs-secondary-color);
   background-color: var(--bs-secondary-bg);
 }
 

@@ -1,7 +1,7 @@
 # APP SETUP
 FROM ghcr.io/jaodev-ph/thursday_appserver/base:latest AS app-setup
 
-EXPOSE 3301
+EXPOSE 5174
 COPY ./requirements.txt /
 ARG GITHUB_TOKEN
 RUN echo "Token is: ${GITHUB_TOKEN}"
@@ -15,7 +15,7 @@ COPY . /srv/app
 WORKDIR /srv/app
 ENV ROOTPATH /srv/app
 CMD gunicorn \
-    --bind 0.0.0.0:3301 \
+    --bind 0.0.0.0:5174 \
     --worker-class geventwebsocket.gunicorn.workers.GeventWebSocketWorker \
     --workers 1 \
     --threads 2 \
@@ -38,7 +38,7 @@ RUN echo "${RELEASE}" | tee -a /srv/release.nfo
 RUN rm -rf /srv/hivesac /requirements*.txt
 RUN apt-get autoremove -y
 CMD gunicorn \
-    --bind 0.0.0.0:3301 \
+    --bind 0.0.0.0:5174 \
     --worker-class geventwebsocket.gunicorn.workers.GeventWebSocketWorker \
     --workers 2 \
     --threads 4 \
